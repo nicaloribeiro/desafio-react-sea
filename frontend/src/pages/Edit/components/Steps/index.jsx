@@ -1,12 +1,6 @@
-import { useState } from "react";
 import { formSteps } from "./helper";
-import { useSelector } from "react-redux";
 
-const FormSteps = () => {
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
-  const storeSteps = useSelector((state) => state.employerReducer.steps);
-  console.log(storeSteps[currentStep].isDone);
-
+const FormSteps = ({ currentStep, storeSteps }) => {
   return (
     <div className="flex flex-wrap items-center justify-around min-h-[160px] bg-white rounded-[20px] py-4 px-6 lg:py-0">
       {formSteps.map((stepEl, index) => (
