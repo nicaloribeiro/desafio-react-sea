@@ -2,6 +2,8 @@ import {
   UPDATE_STEP_IS_DONE,
   NEXT_SETP,
   PREVIOUS_STEP,
+  EDITING_EMPLOYER_TRUE,
+  EDITING_EMPLOYER_FALSE,
 } from "../actions/employerActions";
 const mockEpi = {
   name: "Epi name",
@@ -30,6 +32,7 @@ const initialState = {
     0: {
       employers: [mockEmployer],
       isDone: false,
+      isEditing: true,
     },
   },
 };
@@ -37,14 +40,13 @@ const initialState = {
 const employerReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_STEP_IS_DONE:
-      const { step, isDone } = action.payload;
       return {
         ...state,
         steps: {
           ...state.steps,
-          [step]: {
-            ...state.steps[step],
-            isDone,
+          [action.payload.step]: {
+            ...state.steps[action.payload.step],
+            isDone: action.payload.isDone,
           },
         },
       };
@@ -58,6 +60,28 @@ const employerReducer = (state = initialState, action) => {
         ...state,
         currentStep: state.currentStep - 1,
       };
+    case EDITING_EMPLOYER_TRUE:
+      return {
+        ...state,
+        steps: {
+          ...state.steps,
+          [action.payload.step]: {
+            ...state.steps[action.payload.step],
+            isEditing: true,
+          },
+        },
+      };
+      case EDITING_EMPLOYER_FALSE:
+        return {
+          ...state,
+          steps: {
+            ...state.steps,
+            [action.payload.step]: {
+              ...state.steps[action.payload.step],
+              isEditing: false,
+            },
+          },
+        };
     default:
       return state;
   }

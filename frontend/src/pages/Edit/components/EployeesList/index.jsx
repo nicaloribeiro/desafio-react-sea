@@ -3,13 +3,14 @@ import EmployerCard from "../EmployerCard";
 import Button from "/src/components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStepIsDone } from "/src/store/actions/employerActions";
+import { enableEditing } from "/src/store/actions/employerActions";
 
-const EmployeesList = ({ currentStep }) => {
+const EmployeesList = () => {
   const dispatch = useDispatch();
+  const currentStep = useSelector((state) => state.employerReducer.currentStep);
   const employeesList = useSelector(
     (state) => state.employerReducer.steps[currentStep].employers
   );
-
   const stepDone = useSelector(
     (state) => state.employerReducer.steps[currentStep].isDone
   );
@@ -23,7 +24,15 @@ const EmployeesList = ({ currentStep }) => {
           <p className="text-2xl">Funcionário(s)</p>
         </div>
         <div className="flex flex-col items-center justify-center p-4 overflow-y-auto">
-          <Button text="+ Adicionar Funcionário" large transparent full />
+          <Button
+            text="+ Adicionar Funcionário"
+            large
+            transparent
+            full
+            onClick={() => {
+              dispatch(enableEditing(currentStep));
+            }}
+          />
           <div className="w-full mt-2 lg:flex lg:items-center lg:justify-between">
             <div className="lg:flex lg:w-2/3 lg:justify-between">
               <Button

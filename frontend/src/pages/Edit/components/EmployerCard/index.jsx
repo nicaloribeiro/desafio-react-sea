@@ -1,7 +1,13 @@
 import { formatCpf } from "/src/utils/formatString";
 import DetailCard from "../DetailCard";
+import { useDispatch, useSelector } from "react-redux";
+import { setForm } from "/src/store/actions/employerFormActions";
+import { enableEditing } from "/src/store/actions/employerActions";
 
 const EmployerCard = ({ employer, ...props }) => {
+  const dispatch = useDispatch();
+  const currentStep = useSelector((state) => state.employerReducer.currentStep);
+
   return (
     <div
       {...props}
@@ -21,7 +27,13 @@ const EmployerCard = ({ employer, ...props }) => {
           <DetailCard info={employer.role} />
         </div>
       </div>
-      <div className="flex justify-center items-center font-bold bg-primary-blue rounded-r-[10px] h-auto w-12">
+      <div
+        className="flex justify-center items-center font-bold bg-primary-blue rounded-r-[10px] h-auto w-12 hover:cursor-pointer"
+        onClick={() => {
+          dispatch(setForm(employer));
+          dispatch(enableEditing(currentStep));
+        }}
+      >
         ...
       </div>
     </div>
