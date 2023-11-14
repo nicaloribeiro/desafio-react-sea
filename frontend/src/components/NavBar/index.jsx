@@ -3,7 +3,8 @@ import { useLocation, Link } from "react-router-dom";
 const NavBar = () => {
   const location = useLocation();
   return (
-    <div className="flex w-full h-[57px] bg-primary-blue rounded-b-[20px] items-center justify-center lg:space-y-3 lg:flex-col lg:h-full lg:w-[57px] lg:rounded-r-[20px] lg:rounded-l-none">
+    <div className="flex w-full h-[57px] bg-primary-blue rounded-b-[20px] items-center justify-center lg:space-y-3 lg:flex-col lg:h-full lg:w-[57px] lg:rounded-r-[20px] lg:rounded-l-none lg:relative">
+      <div className="lg:top-[50px] lg:h-[40px] lg:w-full lg:bg-white lg:absolute" />
       {menuIcons.map((menuEl, index) => (
         <Link
           to={menuEl.path}
