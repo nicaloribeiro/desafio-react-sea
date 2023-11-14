@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import leftArrow from "/src/assets/leftArrow.svg";
@@ -8,9 +8,18 @@ import {
   updateField,
   insertActivity,
   updateActivity,
+  insertDocument,
 } from "/src/store/actions/employerFormActions";
 import Section from "/src/components/Section";
-import { Checkbox, DatePicker, Input, Radio, Select, Switch } from "antd";
+import {
+  Checkbox,
+  DatePicker,
+  Input,
+  Radio,
+  Select,
+  Switch,
+  Upload,
+} from "antd";
 import dayjs from "dayjs";
 import Button from "/src/components/Button";
 import {
@@ -24,6 +33,7 @@ import {
 
 const EmployerForm = () => {
   const [tempEpi, setTempEpi] = useState(defaultEpi);
+  const fileInputRef = useRef(null);
 
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.employerReducer.currentStep);
@@ -228,6 +238,42 @@ const EmployerForm = () => {
               onClick={() => {
                 dispatch(insertActivity({ ...defaultActivity, id: uuidv4() }));
               }}
+            />
+          </Section>
+          <Section className="my-2">
+            <div>
+              <p className="text-[#3A3A3A]">
+                Adicione Atestado de Saúde Ocupacional (opcional):
+              </p>
+            </div>
+            <Section>
+              <div>
+                <p className="text-[#3A3A3A] text-xs text-ellipsis">
+                  {currentEmployer.document?.name || "Sem documentos"}
+                </p>
+              </div>
+            </Section>
+
+            <input
+              className="hidden"
+              ref={fileInputRef}
+              type="file"
+              id="fileInput"
+              onChange={() => {
+                const input = document.getElementById("fileInput");
+                const file = input.files[0];
+                dispatch(insertDocument({ name: file.name }));
+              }}
+            />
+            <Button
+              htmlFor="fileInput"
+              onClick={() => {
+                fileInputRef.current.click();
+              }}
+              transparent
+              full
+              className="my-2"
+              text="Selecionar arquivo"
             />
           </Section>
         </div>

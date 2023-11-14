@@ -4,6 +4,7 @@ import {
   UPDATE_FIELD,
   UPDATE_ACTIVITY,
   INSERT_ACTIVITY,
+  INSERT_DOCUMENT,
 } from "../actions/employerFormActions";
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
   role: "",
   usesEpi: false,
   activities: [],
-  documents: [],
+  document: {},
 };
 
 const handleChangeActivities = (activities, activityToInsert) => {
@@ -56,6 +57,11 @@ const employerFormReducer = (state = initialState, action) => {
       return {
         ...state,
         activities: [...state.activities, action.payload.value],
+      };
+    case INSERT_DOCUMENT:
+      return {
+        ...state,
+        document: action.payload.document,
       };
     default:
       return state;

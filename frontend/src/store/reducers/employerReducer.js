@@ -28,7 +28,7 @@ const mockEmployer = {
   birthday: "01/01/2001",
   role: "Role 01",
   activities: [mockActivities],
-  documents: [],
+  document: {},
 };
 const initialState = {
   currentStep: 0,
