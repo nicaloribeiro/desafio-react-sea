@@ -1,4 +1,8 @@
-import { UPDATE_STEP_IS_DONE } from "../actions/employerActions";
+import {
+  UPDATE_STEP_IS_DONE,
+  NEXT_SETP,
+  PREVIOUS_STEP,
+} from "../actions/employerActions";
 const mockEpi = {
   name: "Epi name",
   code: "Epi code",
@@ -34,7 +38,6 @@ const employerReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_STEP_IS_DONE:
       const { step, isDone } = action.payload;
-      console.log(step, isDone)
       return {
         ...state,
         steps: {
@@ -45,7 +48,16 @@ const employerReducer = (state = initialState, action) => {
           },
         },
       };
-
+    case NEXT_SETP:
+      return {
+        ...state,
+        currentStep: state.currentStep + 1,
+      };
+    case PREVIOUS_STEP:
+      return {
+        ...state,
+        currentStep: state.currentStep - 1,
+      };
     default:
       return state;
   }

@@ -14,8 +14,6 @@ const EmployeesList = ({ currentStep }) => {
     (state) => state.employerReducer.steps[currentStep].isDone
   );
 
-  console.log(employeesList[0]);
-
   const countIsActive = (list) => list?.filter((el) => el.isActive).length;
 
   return (
@@ -64,9 +62,6 @@ const EmployeesList = ({ currentStep }) => {
             }
           />
         </div>
-      </div>
-      <div className="flex justify-end w-full mt-3">
-        <Button text="Próximo passo" />
       </div>
     </div>
   );

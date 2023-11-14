@@ -18,10 +18,10 @@ const NavBar = () => {
             }
           />
           <div className="h-8 w-8 bg-white rounded-[10px] flex items-center justify-center relative">
-            <img src={menuEl.icon} className="h-5 w-5" />
+            <img src={menuEl.icon} className="w-5 h-5" />
             {menuEl.subIcon && (
               <div className="h-3 w-3 bg-white rounded-[10px] flex items-center justify-center absolute -right-1 -bottom-1">
-                <img src={menuEl.subIcon} className="h-5 w-5" />
+                <img src={menuEl.subIcon} className="w-5 h-5" />
               </div>
             )}
           </div>

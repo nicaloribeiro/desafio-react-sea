@@ -1,6 +1,5 @@
 const Button = ({
   text,
-  handleClick,
   transparent,
   large,
   full,
@@ -20,7 +19,6 @@ const Button = ({
           : "bg-primary-blue"
       } w-full rounded-[10px] ${className}`}
       {...props}
-      onClick={() => handleClick()}
     >
       {text}
     </button>
