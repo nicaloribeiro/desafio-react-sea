@@ -1,7 +1,12 @@
-import { RESET_FORM, SET_FORM } from "../actions/employerFormActions";
+import {
+  RESET_FORM,
+  SET_FORM,
+  UPDATE_FIELD,
+} from "../actions/employerFormActions";
 
 const initialState = {
-  isActive: true,
+  id: null,
+  isActive: false,
   name: "",
   gender: "",
   cpf: "",
@@ -18,7 +23,12 @@ const employerFormReducer = (state = initialState, action) => {
     case RESET_FORM:
       return initialState;
     case SET_FORM:
-        return action.payload.employer
+      return action.payload.employer;
+    case UPDATE_FIELD:
+      return {
+        ...state,
+        [action.payload.field]: action.payload.value,
+      };
     default:
       return state;
   }
