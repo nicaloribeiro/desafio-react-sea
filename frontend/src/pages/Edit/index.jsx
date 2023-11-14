@@ -8,6 +8,9 @@ const EditPage = () => {
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.employerReducer.currentStep);
   const storeSteps = useSelector((state) => state.employerReducer.steps);
+  const isEditing = useSelector(
+    (state) => state.employerReducer.steps[currentStep].isEditing
+  );
 
   return (
     <div className="relative pb-10 lg:min-h-full lg:pb-0">
@@ -15,21 +18,23 @@ const EditPage = () => {
       <div className="flex flex-col justify-between flex-grow w-full lg:h-2/3 lg:flex-row lg:bottom-0 lg:absolute">
         <StepContent currentStep={currentStep} />
       </div>
-      <div className="w-full pb-4 lg:absolute lg:bottom-0 lg:flex lg:flex-row-reverse lg:justify-between">
-        <Button
-          text="Próximo passo"
-          disabled={!storeSteps[currentStep]?.isDone}
-          onClick={() => dispatch(nextStep())}
-          className="my-2 lg:my-0"
-        />
-        {currentStep > 0 && (
+      {!isEditing && (
+        <div className="w-full pb-4 lg:absolute lg:bottom-0 lg:flex lg:flex-row-reverse lg:justify-between">
           <Button
-            text="Passo anterior"
-            onClick={() => dispatch(prevStep())}
+            text="Próximo passo"
+            disabled={!storeSteps[currentStep]?.isDone}
+            onClick={() => dispatch(nextStep())}
             className="my-2 lg:my-0"
           />
-        )}
-      </div>
+          {currentStep > 0 && (
+            <Button
+              text="Passo anterior"
+              onClick={() => dispatch(prevStep())}
+              className="my-2 lg:my-0"
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

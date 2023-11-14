@@ -5,15 +5,19 @@ import {
   EDITING_EMPLOYER_TRUE,
   EDITING_EMPLOYER_FALSE,
 } from "../actions/employerActions";
+
 const mockEpi = {
-  name: "Epi name",
+  name: "epi_01",
   code: "Epi code",
 };
 
 const mockActivities = {
-  activity: "Activity 01",
-  epis: [mockEpi],
+  id: 1,
+  usesEpi: false,
+  activity: "activity_01",
+  epis: mockEpi,
 };
+
 const mockEmployer = {
   id: 1,
   isActive: true,
@@ -23,7 +27,6 @@ const mockEmployer = {
   rg: "8987778",
   birthday: "01/01/2001",
   role: "Role 01",
-  usesEpi: false,
   activities: [mockActivities],
   documents: [],
 };
@@ -72,17 +75,17 @@ const employerReducer = (state = initialState, action) => {
           },
         },
       };
-      case EDITING_EMPLOYER_FALSE:
-        return {
-          ...state,
-          steps: {
-            ...state.steps,
-            [action.payload.step]: {
-              ...state.steps[action.payload.step],
-              isEditing: false,
-            },
+    case EDITING_EMPLOYER_FALSE:
+      return {
+        ...state,
+        steps: {
+          ...state.steps,
+          [action.payload.step]: {
+            ...state.steps[action.payload.step],
+            isEditing: false,
           },
-        };
+        },
+      };
     default:
       return state;
   }
