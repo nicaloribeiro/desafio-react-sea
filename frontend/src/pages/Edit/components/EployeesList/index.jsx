@@ -25,7 +25,7 @@ const EmployeesList = () => {
         <div className="flex items-center pl-[19px] bg-primary-blue rounded-t-[20px] h-[55px]">
           <p className="text-2xl">Funcionário(s)</p>
         </div>
-        <div className="flex flex-col items-center justify-center p-4 h-4/5 l">
+        <div className="flex flex-col items-center justify-start p-4 h-4/5 l">
           <Button
             text="+ Adicionar Funcionário"
             large
