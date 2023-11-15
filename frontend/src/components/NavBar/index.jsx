@@ -9,13 +9,13 @@ const NavBar = () => {
         <Link
           to={menuEl.path}
           key={`${menuEl.path}-${index}`}
-          className={`flex w-full h-full lg:h-auto justify-center items-center relative`}
+          className="relative flex items-center justify-center w-full h-full lg:h-auto"
         >
           <div
-            className={
+            className={`${
               location.pathname === menuEl.path &&
               "bg-white h-[5px] w-full lg:h-full lg:w-[5px] absolute top-0 lg:left-0"
-            }
+            }`}
           />
           <div className="h-8 w-8 bg-white rounded-[10px] flex items-center justify-center relative">
             <img src={menuEl.icon} className="w-5 h-5" />
