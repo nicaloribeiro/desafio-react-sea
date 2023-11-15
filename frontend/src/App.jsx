@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { Outlet } from "react-router-dom";
-import employeesService from "./services/employees";
 import { useDispatch } from "react-redux";
+import { getAllEmployees } from "./store/reducers/employeeReducer";
 
 function App() {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    console.log('dispatch', dispatch)
-    employeesService.getAll()
-  },[dispatch])
+    dispatch(getAllEmployees());
+  }, [dispatch]);
+
   return (
     <div className="flex flex-col w-screen h-screen lg:flex-row lg:flex">
       <NavBar />

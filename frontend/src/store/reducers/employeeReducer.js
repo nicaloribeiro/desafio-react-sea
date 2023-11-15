@@ -1,36 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import employeesService from "/src/services/employees";
 
-const mockEpi = {
-  name: "epi_01",
-  code: "Epi code",
-};
-
-const mockActivities = {
-  id: 1,
-  usesEpi: false,
-  activity: "activity_01",
-  epis: mockEpi,
-};
-
-const mockEmployee = {
-  id: 1,
-  isActive: true,
-  name: "John Doe",
-  gender: "M",
-  cpf: "09009090909",
-  rg: "8987778",
-  birthday: "01/01/2001",
-  role: "Role 01",
-  activities: [mockActivities],
-  document: {},
-};
 const initialState = {
   loading: false,
   currentStep: 0,
   steps: {
     0: {
-      employees: [mockEmployee],
+      employees: [],
       isDone: false,
       isEditing: false,
     },
@@ -50,6 +26,14 @@ export const updateEmployee = createAsyncThunk(
   async (employee) => {
     const employeeUpdate = await employeesService.update(employee);
     return { employee: employeeUpdate };
+  }
+);
+
+export const getAllEmployees = createAsyncThunk(
+  "employee/getAllEmployees",
+  async () => {
+    const employees = await employeesService.getAll();
+    return { employees };
   }
 );
 
@@ -115,6 +99,16 @@ const employeeSlice = createSlice({
         state.steps[currentStep].employees = updatedEmployees;
         state.steps[currentStep].isEditing = false;
         state.loading = false;
+      })
+      .addCase(getAllEmployees.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllEmployees.rejected, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllEmployees.fulfilled, (state, action) => {
+        const { employees } = action.payload;
+        state.steps[0].employees = employees;
       });
   },
 });
