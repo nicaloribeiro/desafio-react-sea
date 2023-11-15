@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateStepIsDone,
   enableEditing,
-} from "/src/store/actions/employeeActions";
+} from "/src/store/reducers/employeeReducer";
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const EmployeesList = () => {
             transparent
             full
             onClick={() => {
-              dispatch(enableEditing(currentStep));
+              dispatch(enableEditing({ step: currentStep }));
             }}
           />
           <div className="w-full mt-2 lg:flex lg:items-center lg:justify-between">
@@ -69,7 +69,7 @@ const EmployeesList = () => {
             unCheckedChildren="Não"
             className="mx-2 bg-gray-300"
             onChange={(checked) =>
-              dispatch(updateStepIsDone(currentStep, checked))
+              dispatch(updateStepIsDone({ step: currentStep, isDone: checked }))
             }
           />
         </div>

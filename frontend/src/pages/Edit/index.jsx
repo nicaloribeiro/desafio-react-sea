@@ -1,4 +1,4 @@
-import { nextStep, prevStep } from "/src/store/actions/employeeActions";
+import { nextStep, prevStep } from "/src/store/reducers/employeeReducer";
 import StepContent from "./components/StepContent";
 import FormSteps from "./components/Steps";
 import Button from "/src/components/Button";

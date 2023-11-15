@@ -6,7 +6,7 @@ import {
   disableEditing,
   insertEmployee,
   updateEmployee,
-} from "/src/store/actions/employeeActions";
+} from "/src/store/reducers/employeeReducer";
 import {
   resetForm,
   updateField,
@@ -51,14 +51,14 @@ const EmployerForm = () => {
       const hasEmployer = employeeExists(employee, employeesIds);
       if (hasEmployer) {
         const updated = await employeesService.update(employee);
-        dispatch(updateEmployee(updated, currentStep));
+        dispatch(updateEmployee({employee: updated, step: currentStep}));
         toast.success("Funcionário atualizado!");
       } else {
         const created = await employeesService.create(employee);
         toast.success("Funcionário cadastrado!");
-        dispatch(insertEmployee(created, currentStep));
+        dispatch(insertEmployee({employee: created, step: currentStep}));
       }
-      dispatch(disableEditing(currentStep));
+      dispatch(disableEditing({ step: currentStep }));
       dispatch(resetForm());
     } catch (error) {
       toast.error("Hou um problema ao cadastrar o funcionário :(");
@@ -73,7 +73,7 @@ const EmployerForm = () => {
             src={leftArrow}
             className="w-6 h-6 hover:cursor-pointer"
             onClick={() => {
-              dispatch(disableEditing(currentStep));
+              dispatch(disableEditing({step: currentStep}));
               dispatch(resetForm());
             }}
           />

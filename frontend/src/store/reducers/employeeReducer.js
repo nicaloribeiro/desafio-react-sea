@@ -1,12 +1,4 @@
-import {
-  UPDATE_STEP_IS_DONE,
-  NEXT_SETP,
-  PREVIOUS_STEP,
-  EDITING_EMPLOYEE_TRUE,
-  EDITING_EMPLOYEE_FALSE,
-  INSERT_EMPLOYEE,
-  UPDATE_EMPLOYEE,
-} from "../actions/employeeActions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const mockEpi = {
   name: "epi_01",
@@ -43,7 +35,7 @@ const initialState = {
   },
 };
 
-const updateEmployee = (employee, employeeList) => {
+const updateEmployeeHanlder = (employee, employeeList) => {
   const { id } = employee;
   return employeeList.map((currEmployee) => {
     if (currEmployee.id === id) return employee;
@@ -51,83 +43,50 @@ const updateEmployee = (employee, employeeList) => {
   });
 };
 
-const employeeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case UPDATE_STEP_IS_DONE:
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          [action.payload.step]: {
-            ...state.steps[action.payload.step],
-            isDone: action.payload.isDone,
-          },
-        },
-      };
-    case NEXT_SETP:
-      return {
-        ...state,
-        currentStep: state.currentStep + 1,
-      };
-    case PREVIOUS_STEP:
-      return {
-        ...state,
-        currentStep: state.currentStep - 1,
-      };
-    case EDITING_EMPLOYEE_TRUE:
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          [action.payload.step]: {
-            ...state.steps[action.payload.step],
-            isEditing: true,
-          },
-        },
-      };
-    case EDITING_EMPLOYEE_FALSE:
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          [action.payload.step]: {
-            ...state.steps[action.payload.step],
-            isEditing: false,
-          },
-        },
-      };
-    case INSERT_EMPLOYEE:
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          [action.payload.step]: {
-            ...state.steps[action.payload.step],
-            employees: [
-              ...state.steps[action.payload.step].employees,
-              action.payload.employee,
-            ],
-          },
-        },
-      };
-    case UPDATE_EMPLOYEE:
-      return {
-        ...state,
-        steps: {
-          ...state.steps,
-          [action.payload.step]: {
-            ...state.steps[action.payload.step],
-            employees: updateEmployee(
-              action.payload.employee,
-              state.steps[action.payload.step].employees
-            ),
-          },
-        },
-      };
+const employeeSlice = createSlice({
+  name: "employee",
+  initialState,
+  reducers: {
+    updateStepIsDone: (state, action) => {
+      const { step, isDone } = action.payload;
+      state.steps[step].isDone = isDone;
+    },
+    nextStep: (state) => {
+      state.currentStep += 1;
+    },
+    prevStep: (state) => {
+      state.currentStep -= 1;
+    },
+    enableEditing: (state, action) => {
+      const { step } = action.payload;
+      state.steps[step].isEditing = true;
+    },
+    disableEditing: (state, action) => {
+      const { step } = action.payload;
+      state.steps[step].isEditing = false;
+    },
+    insertEmployee: (state, action) => {
+      const { step, employee } = action.payload;
+      state.steps[step].employees.push(employee);
+    },
+    updateEmployee: (state, action) => {
+      const { step, employee } = action.payload;
+      const updatedEmployees = updateEmployeeHanlder(
+        employee,
+        state.steps[step].employees
+      );
+      state.steps[step].employees = updatedEmployees;
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
-
-export default employeeReducer;
+export default employeeSlice.reducer;
+export const {
+  updateStepIsDone,
+  nextStep,
+  prevStep,
+  enableEditing,
+  disableEditing,
+  insertEmployee,
+  updateEmployee,
+} = employeeSlice.actions;
