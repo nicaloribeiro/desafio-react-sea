@@ -2,9 +2,11 @@ import {
   UPDATE_STEP_IS_DONE,
   NEXT_SETP,
   PREVIOUS_STEP,
-  EDITING_EMPLOYER_TRUE,
-  EDITING_EMPLOYER_FALSE,
-} from "../actions/employerActions";
+  EDITING_EMPLOYEE_TRUE,
+  EDITING_EMPLOYEE_FALSE,
+  INSERT_EMPLOYEE,
+  UPDATE_EMPLOYEE,
+} from "../actions/employeeActions";
 
 const mockEpi = {
   name: "epi_01",
@@ -18,7 +20,7 @@ const mockActivities = {
   epis: mockEpi,
 };
 
-const mockEmployer = {
+const mockEmployee = {
   id: 1,
   isActive: true,
   name: "John Doe",
@@ -34,14 +36,22 @@ const initialState = {
   currentStep: 0,
   steps: {
     0: {
-      employers: [mockEmployer],
+      employees: [mockEmployee],
       isDone: false,
-      isEditing: true,
+      isEditing: false,
     },
   },
 };
 
-const employerReducer = (state = initialState, action) => {
+const updateEmployee = (employee, employeeList) => {
+  const { id } = employee;
+  return employeeList.map((currEmployee) => {
+    if (currEmployee.id === id) return employee;
+    return currEmployee;
+  });
+};
+
+const employeeReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_STEP_IS_DONE:
       return {
@@ -64,7 +74,7 @@ const employerReducer = (state = initialState, action) => {
         ...state,
         currentStep: state.currentStep - 1,
       };
-    case EDITING_EMPLOYER_TRUE:
+    case EDITING_EMPLOYEE_TRUE:
       return {
         ...state,
         steps: {
@@ -75,7 +85,7 @@ const employerReducer = (state = initialState, action) => {
           },
         },
       };
-    case EDITING_EMPLOYER_FALSE:
+    case EDITING_EMPLOYEE_FALSE:
       return {
         ...state,
         steps: {
@@ -86,9 +96,38 @@ const employerReducer = (state = initialState, action) => {
           },
         },
       };
+    case INSERT_EMPLOYEE:
+      return {
+        ...state,
+        steps: {
+          ...state.steps,
+          [action.payload.step]: {
+            ...state.steps[action.payload.step],
+            employees: [
+              ...state.steps[action.payload.step].employees,
+              action.payload.employee,
+            ],
+          },
+        },
+      };
+    case UPDATE_EMPLOYEE:
+      return {
+        ...state,
+        steps: {
+          ...state.steps,
+          [action.payload.step]: {
+            ...state.steps[action.payload.step],
+            employees: updateEmployee(
+              action.payload.employee,
+              state.steps[action.payload.step].employees
+            ),
+          },
+        },
+      };
+
     default:
       return state;
   }
 };
 
-export default employerReducer;
+export default employeeReducer;
