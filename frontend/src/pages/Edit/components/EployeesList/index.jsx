@@ -25,7 +25,7 @@ const EmployeesList = () => {
         <div className="flex items-center pl-[19px] bg-primary-blue rounded-t-[20px] h-[55px]">
           <p className="text-2xl">Funcionário(s)</p>
         </div>
-        <div className="flex flex-col items-center justify-center p-4 overflow-y-auto">
+        <div className="flex flex-col items-center justify-center p-4 h-4/5 l">
           <Button
             text="+ Adicionar Funcionário"
             large
@@ -52,14 +52,16 @@ const EmployeesList = () => {
               </p>
             </div>
           </div>
-          {employeesList?.length > 0
-            ? employeesList?.map((employee, index) => (
-                <EmployerCard
-                  key={`${employee.name}-${index}`}
-                  employee={employee}
-                />
-              ))
-            : null}
+          <div className="w-full mt-2 overflow-y-auto ">
+            {employeesList?.length > 0
+              ? employeesList?.map((employee, index) => (
+                  <EmployerCard
+                    key={`${employee.name}-${index}`}
+                    employee={employee}
+                  />
+                ))
+              : null}
+          </div>
         </div>
         <div className="flex items-center justify-end w-full p-4 ">
           <p className="text-[#3A3A3A]">A etapa está concluída?</p>
