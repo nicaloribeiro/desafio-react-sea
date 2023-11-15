@@ -2,11 +2,11 @@ import { formatCpf } from "/src/utils/formatString";
 import DetailCard from "../DetailCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setForm } from "/src/store/actions/employerFormActions";
-import { enableEditing } from "/src/store/actions/employerActions";
+import { enableEditing } from "/src/store/actions/employeeActions";
 
 const EmployerCard = ({ employer, ...props }) => {
   const dispatch = useDispatch();
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
+  const currentStep = useSelector((state) => state.employeeReducer.currentStep);
 
   return (
     <div

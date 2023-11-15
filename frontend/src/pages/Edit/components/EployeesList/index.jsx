@@ -2,17 +2,19 @@ import { Switch } from "antd";
 import EmployerCard from "../EmployerCard";
 import Button from "/src/components/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStepIsDone } from "/src/store/actions/employerActions";
-import { enableEditing } from "/src/store/actions/employerActions";
+import {
+  updateStepIsDone,
+  enableEditing,
+} from "/src/store/actions/employeeActions";
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
+  const currentStep = useSelector((state) => state.employeeReducer.currentStep);
   const employeesList = useSelector(
-    (state) => state.employerReducer.steps[currentStep].employers
+    (state) => state.employeeReducer.steps[currentStep].employees
   );
   const stepDone = useSelector(
-    (state) => state.employerReducer.steps[currentStep].isDone
+    (state) => state.employeeReducer.steps[currentStep].isDone
   );
 
   const countIsActive = (list) => list?.filter((el) => el.isActive).length;

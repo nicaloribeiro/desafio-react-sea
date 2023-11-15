@@ -3,9 +3,9 @@ import EmployeesList from "../EployeesList";
 import EmployerForm from "../EmployerForm";
 
 const Employer = () => {
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
+  const currentStep = useSelector((state) => state.employeeReducer.currentStep);
   const isEditing = useSelector(
-    (state) => state.employerReducer.steps[currentStep].isEditing
+    (state) => state.employeeReducer.steps[currentStep]?.isEditing
   );
 
   switch (isEditing) {

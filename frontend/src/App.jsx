@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import NavBar from "./components/NavBar";
 import { Outlet } from "react-router-dom";
+import employeesService from "./services/employees";
 
 function App() {
+  useEffect(() => {
+    employeesService.getAll()
+  },[])
   return (
     <div className="flex flex-col w-screen h-screen lg:flex-row lg:flex">
       <NavBar />

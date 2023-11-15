@@ -2,7 +2,11 @@ import { useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import leftArrow from "/src/assets/leftArrow.svg";
-import { disableEditing } from "/src/store/actions/employerActions";
+import {
+  disableEditing,
+  insertEmployee,
+  updateEmployee,
+} from "/src/store/actions/employeeActions";
 import {
   resetForm,
   updateField,
@@ -11,15 +15,7 @@ import {
   insertDocument,
 } from "/src/store/actions/employerFormActions";
 import Section from "/src/components/Section";
-import {
-  Checkbox,
-  DatePicker,
-  Input,
-  Radio,
-  Select,
-  Switch,
-  Upload,
-} from "antd";
+import { Checkbox, DatePicker, Input, Radio, Select, Switch } from "antd";
 import dayjs from "dayjs";
 import Button from "/src/components/Button";
 import {
@@ -30,16 +26,44 @@ import {
   defaultEpi,
   epiOptions,
 } from "./helper";
+import { toast } from "react-toastify";
+import employeesService from "/src/services/employees";
 
 const EmployerForm = () => {
-  const [tempEpi, setTempEpi] = useState(defaultEpi);
+  const dispatch = useDispatch();
   const fileInputRef = useRef(null);
 
-  const dispatch = useDispatch();
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
+  const [tempEpi, setTempEpi] = useState(defaultEpi);
+
+  const currentStep = useSelector((state) => state.employeeReducer.currentStep);
   const currentEmployer = useSelector((state) => state.employerFormReducer);
-  console.log("currentEmployer, ", currentEmployer);
+  const employeesIds = useSelector(
+    (state) => state.employeeReducer.steps[currentStep].employees
+  ).map((employee) => employee.id);
   const userId = currentEmployer.id || uuidv4();
+
+  const employeeExists = (employee, employeesList) => {
+    return employeesList.some((id) => id === employee.id);
+  };
+
+  const submitEmployee = async (employee) => {
+    try {
+      const hasEmployer = employeeExists(employee, employeesIds);
+      if (hasEmployer) {
+        const updated = await employeesService.update(employee);
+        dispatch(updateEmployee(updated, currentStep));
+        toast.success("Funcionário atualizado!");
+      } else {
+        const created = await employeesService.create(employee);
+        toast.success("Funcionário cadastrado!");
+        dispatch(insertEmployee(created, currentStep));
+      }
+      dispatch(disableEditing(currentStep));
+      dispatch(resetForm());
+    } catch (error) {
+      toast.error("Hou um problema ao cadastrar o funcionário :(");
+    }
+  };
 
   return (
     <div className="lg:w-2/3 pt-10 lg:pt-0 lg:pl-10 lg:pb-[60px] overflow-y-auto ">
@@ -176,7 +200,12 @@ const EmployerForm = () => {
                       className="w-full border-primary-blue border-[1px] rounded-md my-2"
                       options={activityOptions}
                       onChange={(value) => {
-                        dispatch(updateField("role", value));
+                        dispatch(
+                          updateActivity({
+                            ...activity,
+                            activity: value,
+                          })
+                        );
                       }}
                     />
                     {!activity.usesEpi && (
@@ -276,6 +305,16 @@ const EmployerForm = () => {
               text="Selecionar arquivo"
             />
           </Section>
+          <Button
+            onClick={async () => {
+              console.log(currentEmployer);
+              await submitEmployee({ ...currentEmployer, id: userId });
+            }}
+            transparent
+            full
+            className="my-2"
+            text="Salvar"
+          />
         </div>
       </div>
     </div>

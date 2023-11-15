@@ -16,7 +16,6 @@ const initialState = {
   rg: "",
   birthday: "",
   role: "",
-  usesEpi: false,
   activities: [],
   document: {},
 };
@@ -39,7 +38,7 @@ const employerFormReducer = (state = initialState, action) => {
     case RESET_FORM:
       return initialState;
     case SET_FORM:
-      return action.payload.employer;
+      return action.payload.employee;
     case UPDATE_FIELD:
       return {
         ...state,

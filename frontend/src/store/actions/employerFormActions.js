@@ -9,9 +9,9 @@ export const resetForm = () => ({
   type: RESET_FORM,
 });
 
-export const setForm = (employer) => ({
+export const setForm = (employee) => ({
   type: SET_FORM,
-  payload: { employer },
+  payload: { employee },
 });
 
 export const updateField = (field, value) => ({
