@@ -53,10 +53,10 @@ const EmployeesList = () => {
             </div>
           </div>
           {employeesList?.length > 0
-            ? employeesList?.map((employer, index) => (
+            ? employeesList?.map((employee, index) => (
                 <EmployerCard
-                  key={`${employer.name}-${index}`}
-                  employer={employer}
+                  key={`${employee.name}-${index}`}
+                  employee={employee}
                 />
               ))
             : null}

@@ -10,10 +10,11 @@ import {
 import {
   resetForm,
   updateField,
-  insertActivity,
   updateActivity,
+  insertActivity,
   insertDocument,
-} from "/src/store/actions/employerFormActions";
+} from "/src/store/reducers/employeeFormReducer.js";
+
 import Section from "/src/components/Section";
 import { Checkbox, DatePicker, Input, Radio, Select, Switch } from "antd";
 import dayjs from "dayjs";
@@ -85,7 +86,9 @@ const EmployerForm = () => {
               checkedChildren="Ativo"
               unCheckedChildren="Inativo"
               className="mx-2 bg-gray-300"
-              onChange={(checked) => dispatch(updateField("isActive", checked))}
+              onChange={(checked) =>
+                dispatch(updateField({ field: "isActive", value: checked }))
+              }
             />
           </Section>
           <Section className="flex-col my-2 lg:flex lg:flex-row">
@@ -95,7 +98,11 @@ const EmployerForm = () => {
                 <Input
                   className="border-primary-blue"
                   defaultValue={currentEmployer.name}
-                  onBlur={(e) => dispatch(updateField("name", e.target.value))}
+                  onBlur={(e) =>
+                    dispatch(
+                      updateField({ field: "name", value: e.target.value })
+                    )
+                  }
                 />
               </>
               <>
@@ -103,7 +110,11 @@ const EmployerForm = () => {
                 <Input
                   className="border-primary-blue"
                   defaultValue={currentEmployer.cpf}
-                  onBlur={(e) => dispatch(updateField("cpf", e.target.value))}
+                  onBlur={(e) =>
+                    dispatch(
+                      updateField({ field: "cpf", value: e.target.value })
+                    )
+                  }
                 />
               </>
               <>
@@ -111,7 +122,11 @@ const EmployerForm = () => {
                 <Input
                   className="border-primary-blue"
                   defaultValue={currentEmployer.rg}
-                  onBlur={(e) => dispatch(updateField("rg", e.target.value))}
+                  onBlur={(e) =>
+                    dispatch(
+                      updateField({ field: "rg", value: e.target.value })
+                    )
+                  }
                 />
               </>
             </div>
@@ -122,7 +137,9 @@ const EmployerForm = () => {
                   name="radiogroup"
                   defaultValue={currentEmployer.gender}
                   onChange={(e) =>
-                    dispatch(updateField("gender", e.target.value))
+                    dispatch(
+                      updateField({ field: "gender", value: e.target.value })
+                    )
                   }
                 >
                   <Radio value={"M"}>Masculino</Radio>
@@ -143,7 +160,10 @@ const EmployerForm = () => {
                   format={dateFormat}
                   onChange={(value) => {
                     dispatch(
-                      updateField("birthday", dayjs(value).format(dateFormat))
+                      updateField({
+                        field: "birthday",
+                        value: dayjs(value).format(dateFormat),
+                      })
                     );
                   }}
                 />
@@ -156,7 +176,7 @@ const EmployerForm = () => {
                   className="w-full border-primary-blue border-[1px] rounded-md"
                   options={roleOptions}
                   onChange={(value) => {
-                    dispatch(updateField("role", value));
+                    dispatch(updateField({ field: "role", value }));
                   }}
                 />
               </>
@@ -181,9 +201,11 @@ const EmployerForm = () => {
                       onChange={(e) => {
                         dispatch(
                           updateActivity({
-                            ...activity,
-                            epis: {},
-                            usesEpi: e.target.checked,
+                            value: {
+                              ...activity,
+                              epis: {},
+                              usesEpi: e.target.checked,
+                            },
                           })
                         );
                       }}
@@ -198,8 +220,7 @@ const EmployerForm = () => {
                       onChange={(value) => {
                         dispatch(
                           updateActivity({
-                            ...activity,
-                            activity: value,
+                            value: { ...activity, activity: value },
                           })
                         );
                       }}
@@ -239,8 +260,7 @@ const EmployerForm = () => {
                           onClick={() => {
                             dispatch(
                               updateActivity({
-                                ...activity,
-                                epis: tempEpi,
+                                value: { ...activity, epis: tempEpi },
                               })
                             );
                             setTempEpi(defaultEpi);
@@ -262,7 +282,11 @@ const EmployerForm = () => {
               full
               className="my-2"
               onClick={() => {
-                dispatch(insertActivity({ ...defaultActivity, id: uuidv4() }));
+                dispatch(
+                  insertActivity({
+                    value: { ...defaultActivity, id: uuidv4() },
+                  })
+                );
               }}
             />
           </Section>
@@ -288,7 +312,7 @@ const EmployerForm = () => {
               onChange={() => {
                 const input = document.getElementById("fileInput");
                 const file = input.files[0];
-                dispatch(insertDocument({ name: file.name }));
+                dispatch(insertDocument({ document: { name: file.name } }));
               }}
             />
             <Button
