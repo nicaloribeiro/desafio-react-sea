@@ -1,4 +1,4 @@
-import { nextStep, prevStep } from "/src/store/actions/employerActions";
+import { nextStep, prevStep } from "/src/store/actions/employeeActions";
 import StepContent from "./components/StepContent";
 import FormSteps from "./components/Steps";
 import Button from "/src/components/Button";
@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const EditPage = () => {
   const dispatch = useDispatch();
-  const currentStep = useSelector((state) => state.employerReducer.currentStep);
-  const storeSteps = useSelector((state) => state.employerReducer.steps);
-  const isEditing = useSelector(
-    (state) => state.employerReducer.steps[currentStep].isEditing
-  );
+  const currentStep = useSelector((state) => state.employeeReducer.currentStep);
+  const storeSteps = useSelector((state) => state.employeeReducer.steps);
+  const isEditing = storeSteps[currentStep]?.isEditing;
 
   return (
     <div className="relative pb-10 lg:min-h-full lg:pb-0">
@@ -30,7 +28,7 @@ const EditPage = () => {
             <Button
               text="Passo anterior"
               onClick={() => dispatch(prevStep())}
-              className="my-2 lg:my-0"
+              className="my-2 lg:my-0 hover:cursor"
             />
           )}
         </div>
