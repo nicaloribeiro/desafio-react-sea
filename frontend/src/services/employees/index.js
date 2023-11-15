@@ -16,7 +16,6 @@ const update = async (employee) => {
   const { id } = employee;
   const upadated = await api.put(`/employees/${id}`, employee);
   const { data } = upadated;
-  console.log("data", data);
   return data;
 };
 

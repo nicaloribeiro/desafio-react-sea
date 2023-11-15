@@ -307,7 +307,6 @@ const EmployerForm = () => {
           </Section>
           <Button
             onClick={async () => {
-              console.log(currentEmployer);
               await submitEmployee({ ...currentEmployer, id: userId });
             }}
             transparent

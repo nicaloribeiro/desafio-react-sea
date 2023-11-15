@@ -34,11 +34,3 @@ export const epiOptions = [
   { value: "epi_03", label: "Epi 03" },
   { value: "epi_04", label: "Epi 04" },
 ];
-
-export const uploadFile = (file) => {
-  if (file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    console.log('formData', formData)
-  }
-};
