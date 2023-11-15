@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import EmptyMessage from "./components/EmptyMessage/index.jsx";
 import EditPage from "./pages/Edit/index.jsx";
 import { Provider } from "react-redux";
-import rootReducer from "./store/index.js";
+import store from "./store/index.js";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={rootReducer}>
+    <Provider store={store}>
       <RouterProvider router={router} />
       <ToastContainer />
     </Provider>
