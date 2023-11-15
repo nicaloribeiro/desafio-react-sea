@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import leftArrow from "/src/assets/leftArrow.svg";
 import {
   disableEditing,
-  insertEmployee,
   updateEmployee,
+  createEmployee,
 } from "/src/store/reducers/employeeReducer";
 import {
   resetForm,
@@ -27,7 +27,6 @@ import {
   epiOptions,
 } from "./helper";
 import { toast } from "react-toastify";
-import employeesService from "/src/services/employees";
 
 const EmployerForm = () => {
   const dispatch = useDispatch();
@@ -50,15 +49,12 @@ const EmployerForm = () => {
     try {
       const hasEmployer = employeeExists(employee, employeesIds);
       if (hasEmployer) {
-        const updated = await employeesService.update(employee);
-        dispatch(updateEmployee({employee: updated, step: currentStep}));
+        dispatch(updateEmployee(employee));
         toast.success("Funcionário atualizado!");
       } else {
-        const created = await employeesService.create(employee);
+        dispatch(createEmployee(employee));
         toast.success("Funcionário cadastrado!");
-        dispatch(insertEmployee({employee: created, step: currentStep}));
       }
-      dispatch(disableEditing({ step: currentStep }));
       dispatch(resetForm());
     } catch (error) {
       toast.error("Hou um problema ao cadastrar o funcionário :(");
@@ -73,7 +69,7 @@ const EmployerForm = () => {
             src={leftArrow}
             className="w-6 h-6 hover:cursor-pointer"
             onClick={() => {
-              dispatch(disableEditing({step: currentStep}));
+              dispatch(disableEditing({ step: currentStep }));
               dispatch(resetForm());
             }}
           />
@@ -248,6 +244,7 @@ const EmployerForm = () => {
                               })
                             );
                             setTempEpi(defaultEpi);
+                            toast.info("EPI adicionada");
                           }}
                         />
                       </div>
