@@ -6,9 +6,11 @@ import {
   updateStepIsDone,
   enableEditing,
 } from "/src/store/reducers/employeeReducer";
+import { useState } from "react";
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
+  const [isActiveFilter, setIsActiveFilter] = useState(false);
   const currentStep = useSelector((state) => state.employeeReducer.currentStep);
   const employeesList = useSelector(
     (state) => state.employeeReducer.steps[currentStep].employees
@@ -43,8 +45,20 @@ const EmployeesList = () => {
                 spacing={2}
                 full
                 className="lg:mr-2"
+                isActive={isActiveFilter}
+                onClick={() => {
+                  setIsActiveFilter(true);
+                }}
               />
-              <Button text="Limpar filtros" transparent spacing={2} full />
+              <Button
+                text="Limpar filtros"
+                transparent
+                spacing={2}
+                full
+                onClick={() => {
+                  setIsActiveFilter(false);
+                }}
+              />
             </div>
             <div className="flex justify-center lg:w-1/3 lg:justify-end">
               <p className="text-[#4F4F4F] text-sm">
@@ -54,12 +68,16 @@ const EmployeesList = () => {
           </div>
           <div className="w-full mt-2 overflow-y-auto ">
             {employeesList?.length > 0
-              ? employeesList?.map((employee, index) => (
-                  <EmployeeCard
-                    key={`${employee.name}-${index}`}
-                    employee={employee}
-                  />
-                ))
+              ? employeesList
+                  ?.filter((employee) =>
+                    isActiveFilter ? employee.isActive === true : employee
+                  )
+                  .map((employee, index) => (
+                    <EmployeeCard
+                      key={`${employee.name}-${index}`}
+                      employee={employee}
+                    />
+                  ))
               : null}
           </div>
         </div>

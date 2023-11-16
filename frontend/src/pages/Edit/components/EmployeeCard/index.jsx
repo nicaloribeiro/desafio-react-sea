@@ -16,15 +16,15 @@ const EmployeeCard = ({ employee, ...props }) => {
       <div className="flex flex-col w-full p-2">
         <p className="text-[#707070]">{employee.name}</p>
         <div className="flex flex-wrap items-center justify-start w-full p-2">
-          <DetailCard info={formatCpf(employee.cpf)} />
+          <DetailCard info={formatCpf(employee.cpf)} className="m-1" />
           {employee.activities.map((activity, index) => (
             <DetailCard
               key={`${activity.activity}-${index}`}
               info={activity.activity}
-              className="m-2"
+              className="m-1"
             />
           ))}
-          <DetailCard info={employee.role} />
+          <DetailCard info={employee.role} className="m-1" />
         </div>
       </div>
       <div

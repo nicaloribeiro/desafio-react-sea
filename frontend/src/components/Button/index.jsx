@@ -5,6 +5,7 @@ const Button = ({
   full,
   spacing,
   className,
+  isActive,
   ...props
 }) => {
   return (
@@ -17,7 +18,9 @@ const Button = ({
         transparent
           ? "bg-transparent text-primary-blue border-[1px] border-solid border-primary-blue"
           : "bg-primary-blue"
-      } w-full rounded-[10px] ${className}`}
+      } w-full rounded-[10px] ${className}
+      ${isActive && "bg-green-100"}
+      `}
       {...props}
     >
       {text}
