@@ -1,5 +1,5 @@
 import { Switch } from "antd";
-import EmployerCard from "../EmployerCard";
+import EmployeeCard from "../EmployeeCard";
 import Button from "/src/components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -55,7 +55,7 @@ const EmployeesList = () => {
           <div className="w-full mt-2 overflow-y-auto ">
             {employeesList?.length > 0
               ? employeesList?.map((employee, index) => (
-                  <EmployerCard
+                  <EmployeeCard
                     key={`${employee.name}-${index}`}
                     employee={employee}
                   />

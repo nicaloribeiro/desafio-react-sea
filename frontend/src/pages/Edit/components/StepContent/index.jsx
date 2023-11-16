@@ -1,4 +1,4 @@
-import Employer from "../Employer";
+import Employee from "../Employee";
 import EmployeesList from "../EployeesList";
 import InfoCard from "../InfoCard";
 import EmptyMessage from "/src/components/EmptyMessage";
@@ -9,7 +9,7 @@ const StepContent = ({ currentStep }) => {
       return (
         <>
           <InfoCard />
-          <Employer />
+          <Employee />
         </>
       );
     default:

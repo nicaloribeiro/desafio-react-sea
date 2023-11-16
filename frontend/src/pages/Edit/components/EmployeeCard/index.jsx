@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setForm } from "/src/store/reducers/employeeFormReducer.js";
 import { enableEditing } from "/src/store/reducers/employeeReducer";
 
-const EmployerCard = ({ employee, ...props }) => {
+const EmployeeCard = ({ employee, ...props }) => {
   const dispatch = useDispatch();
   const currentStep = useSelector((state) => state.employeeReducer.currentStep);
 
@@ -40,4 +40,4 @@ const EmployerCard = ({ employee, ...props }) => {
   );
 };
 
-export default EmployerCard;
+export default EmployeeCard;

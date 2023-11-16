@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import EmployeesList from "../EployeesList";
-import EmployerForm from "../EmployerForm";
+import EmployeeForm from "../EmployeeForm";
 
-const Employer = () => {
+const Employee = () => {
   const currentStep = useSelector((state) => state.employeeReducer.currentStep);
   const isEditing = useSelector(
     (state) => state.employeeReducer.steps[currentStep]?.isEditing
@@ -10,10 +10,10 @@ const Employer = () => {
 
   switch (isEditing) {
     case true:
-      return <EmployerForm />;
+      return <EmployeeForm />;
     default:
       return <EmployeesList />;
   }
 };
 
-export default Employer;
+export default Employee;
